@@ -6,6 +6,7 @@ import { HomePageComponent } from './components/home-page.component';
 import { HomePageRoutingModule } from '../profile-page/profile-page-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { HasPermissionPipe } from '../pipes/has-permission.pipe';
 
 @NgModule({
   declarations: [HomePageComponent],
@@ -15,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
     HomePageRoutingModule,
     MatButtonModule,
     MatInputModule,
+    HasPermissionPipe,
   ],
 })
 export class HomePageModule {}

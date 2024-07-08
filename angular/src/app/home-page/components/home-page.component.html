@@ -18,7 +18,8 @@
     </button>
   </form>
 </div>
-} @else { @for (topic of topics; track $index) {
+} @else if(UserPermission.ReadComments | hasPermission) { @for (topic of topics;
+track $index) {
 <div class="card topic p-3 m-4">
   <div>
     <h2>{{ topic.title }}</h2>
@@ -44,8 +45,7 @@
   </div>
   }
 </div>
-}
-
+} @if (UserPermission.AddDeleteTopics | hasPermission) {
 <div>
   <form [formGroup]="topicForm">
     <div class="flex flex-column gap-2">
@@ -69,7 +69,7 @@
     </button>
   </form>
 </div>
-}
+} }
 
 <ng-template #commentTemplate let-comment>
   <ul class="comment flex justify-content-between">

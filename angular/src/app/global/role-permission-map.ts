@@ -1,4 +1,4 @@
-import { UserPermission } from '../enums/rights.enum';
+import { UserPermission } from '../enums/user-permissions.enum';
 import { UserRole } from '../enums/roles.enum';
 
 export const RolePermissionsMap: Record<string, UserPermission[]> = {

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { UserRole } from '../enums/roles.enum';
-import { UserPermission } from '../enums/rights.enum';
+import { UserPermission } from '../enums/user-permissions.enum';
 import { RolePermissionsMap } from '../global/role-permission-map';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

@@ -6,6 +6,7 @@ import { login } from '../../store/actions/auth.actions';
 import { BehaviorSubject, tap } from 'rxjs';
 import { IUser } from '../../interfaces/user.interface';
 import { selectUser } from '../../store/selectors/auth.selectors';
+import { UserPermission } from '../../enums/user-permissions.enum';
 
 @Component({
   selector: 'app-home-page',
@@ -24,6 +25,8 @@ export class HomePageComponent implements OnInit {
   public loginForm!: FormGroup;
 
   public commentVisibility: boolean[] = [];
+
+  public readonly UserPermission = UserPermission;
 
   constructor(
     private fb: FormBuilder,
