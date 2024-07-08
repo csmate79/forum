@@ -1,0 +1,7 @@
+<div class="flex gap-5 m-4">
+  @for (item of items; track $index) {
+  <button mat-raised-button color="primary" [routerLink]="item.routerLink">
+    {{ item.label }}
+  </button>
+  }
+</div>

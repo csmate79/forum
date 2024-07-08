@@ -1,0 +1,90 @@
+<!-- {{ loggedInUser$ | async | json }} -->
+<div class="flex flex-column gap-6">
+  <div>
+    <h2>User Profile</h2>
+    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+      <div class="flex flex-row gap-2">
+        <div class="white-space-normal">
+          <mat-form-field>
+            <mat-label for="name">Name</mat-label>
+            <input matInput id="name" formControlName="name" />
+          </mat-form-field>
+          <div
+            *ngIf="
+              userForm.controls['name'].invalid &&
+              (userForm.controls['name'].dirty ||
+                userForm.controls['name'].touched)
+            "
+          >
+            <p>Name is required and should be at least 5 characters long.</p>
+          </div>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput id="email" formControlName="email" />
+            <mat-label for="email">E-mail</mat-label>
+          </mat-form-field>
+          <div
+            *ngIf="
+              userForm.controls['email'].invalid &&
+              (userForm.controls['email'].dirty ||
+                userForm.controls['email'].touched)
+            "
+          >
+            A valid email is required.
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button type="submit" [disabled]="userForm.invalid">
+        Update Profile
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <h3>Change Password</h3>
+    <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+      <div class="flex flex-row gap-2">
+        <mat-form-field>
+          <input matInput id="password1" formControlName="password1" />
+          <mat-label for="password1">Password</mat-label>
+        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <input matInput id="password2" formControlName="password2" />
+            <mat-label for="password2">Confirm Password</mat-label>
+          </mat-form-field>
+          <div
+            *ngIf="
+              passwordForm.hasError('notMatching') &&
+              passwordForm.controls['password2'].touched
+            "
+          >
+            Passwords do not match.
+          </div>
+        </div>
+      </div>
+
+      <button mat-raised-button type="submit" [disabled]="passwordForm.invalid">
+        Change Password
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <h3>Role: {{ user?.role }}</h3>
+    <ul>
+      <li *ngFor="let perm of permissions">
+        <span [style.color]="(perm.bit | hasPermission) ? 'green' : 'red'">{{
+          perm.name
+        }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <h3>Statistics</h3>
+    <p>Topics: {{ userActivities?.topics }}</p>
+    <p>Comments: {{ userActivities?.comments }}</p>
+  </div>
+</div>

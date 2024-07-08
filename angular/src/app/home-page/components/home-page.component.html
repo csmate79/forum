@@ -1,0 +1,94 @@
+@if (!(user$ | async)) {
+<div>
+  Login
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="flex flex-row gap-2">
+      <mat-form-field>
+        <input matInput id="username" formControlName="username" />
+        <mat-label for="username">Username</mat-label>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="password" formControlName="password" />
+        <mat-label for="password">Password</mat-label>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button type="submit" [disabled]="loginForm.invalid">
+      Login
+    </button>
+  </form>
+</div>
+} @else { @for (topic of topics; track $index) {
+<div class="card topic p-3 m-4">
+  <div>
+    <h2>{{ topic.title }}</h2>
+    <p>
+      <strong>{{ topic.author.name }}:</strong>
+    </p>
+    <p>{{ topic.body }}</p>
+  </div>
+  @if (topic.comments.length) {
+  <small
+    (click)="toggleCommentVisibility($index)"
+    [ngClass]="{ 'cursor-pointer': topic.comments.length }"
+    >comments</small
+  >
+
+  } @if (topic.comments.length && commentVisibility[$index]) {
+  <div #commentSection>
+    @for (comment of topic.comments; track $index) {
+    <ng-container
+      *ngTemplateOutlet="commentTemplate; context: { $implicit: comment }"
+    ></ng-container>
+    }
+  </div>
+  }
+</div>
+}
+
+<div>
+  <form [formGroup]="topicForm">
+    <div class="flex flex-column gap-2">
+      <mat-form-field>
+        <input matInput id="title" formControlName="title" class="w-full" />
+        <mat-label for="title">Title</mat-label>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="body" formControlName="body" class="w-full" />
+        <mat-label for="body">Body</mat-label>
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="topicForm.invalid"
+      (onClick)="onAddTitle()"
+    >
+      Add Title
+    </button>
+  </form>
+</div>
+}
+
+<ng-template #commentTemplate let-comment>
+  <ul class="comment flex justify-content-between">
+    <div>
+      <p>
+        <strong>{{ comment.author.name }}</strong
+        >: {{ comment.body }}
+      </p>
+      <div class="children" *ngIf="comment.comments.length">
+        @for (childComment of comment.comments; track $index) {
+        <ng-container
+          *ngTemplateOutlet="
+            commentTemplate;
+            context: { $implicit: childComment }
+          "
+        ></ng-container>
+        }
+      </div>
+      <small class="cursor-pointer">add comment</small>
+    </div>
+  </ul>
+</ng-template>
